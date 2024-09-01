@@ -1,0 +1,244 @@
+<h2 class="text-2xl font-bold mb-4">Edit Job</h2>
+<form
+  (ngSubmit)="onSubmit(jobForm)"
+  #jobForm="ngForm"
+  *ngIf="jobData"
+  class="space-y-4"
+>
+  <div>
+    <label for="title" class="block text-sm font-medium text-gray-700"
+      >Job Title</label
+    >
+    <input
+      type="text"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="title"
+      [(ngModel)]="jobData.title"
+      name="title"
+      required
+      #title="ngModel"
+    />
+    <div
+      *ngIf="title.invalid && (title.dirty || title.touched)"
+      class="mt-2 text-sm text-red-600"
+    >
+      Job title is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="designation" class="block text-sm font-medium text-gray-700"
+      >Designation</label
+    >
+    <select
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="designation"
+      [(ngModel)]="jobData.designation"
+      name="designation"
+      required
+      #designation="ngModel"
+    >
+      <option value="">Select a designation</option>
+      <option *ngFor="let des of designations" [value]="des">{{ des }}</option>
+    </select>
+    <div
+      *ngIf="designation.invalid && (designation.dirty || designation.touched)"
+      class="mt-2 text-sm text-red-600"
+    >
+      Designation is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="description" class="block text-sm font-medium text-gray-700"
+      >Description</label
+    >
+    <textarea
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="description"
+      [(ngModel)]="jobData.description"
+      name="description"
+      required
+      #description="ngModel"
+    ></textarea>
+    <div
+      *ngIf="description.invalid && (description.dirty || description.touched)"
+      class="mt-2 text-sm text-red-600"
+    >
+      Description is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="location" class="block text-sm font-medium text-gray-700"
+      >Location</label
+    >
+    <select
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="location"
+      [(ngModel)]="jobData.location"
+      name="location"
+      required
+      #location="ngModel"
+    >
+      <option value="">Select a location</option>
+      <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
+    </select>
+    <div
+      *ngIf="location.invalid && (location.dirty || location.touched)"
+      class="mt-2 text-sm text-red-600"
+    >
+      Location is required.
+    </div>
+  </div>
+
+  <div>
+    <label for="requiredSkills" class="block text-sm font-medium text-gray-700"
+      >Required Skills (comma-separated)</label
+    >
+    <input
+      type="text"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="requiredSkills"
+      [(ngModel)]="jobData.requiredSkills"
+      name="requiredSkills"
+      required
+      #requiredSkills="ngModel"
+    />
+    <div
+      *ngIf="
+        requiredSkills.invalid &&
+        (requiredSkills.dirty || requiredSkills.touched)
+      "
+      class="mt-2 text-sm text-red-600"
+    >
+      Required skills are required.
+    </div>
+  </div>
+
+  <div>
+    <label
+      for="languagesRequired"
+      class="block text-sm font-medium text-gray-700"
+      >Languages Required (comma-separated)</label
+    >
+    <input
+      type="text"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="languagesRequired"
+      [(ngModel)]="jobData.languagesRequired"
+      name="languagesRequired"
+      required
+      #languagesRequired="ngModel"
+    />
+    <div
+      *ngIf="
+        languagesRequired.invalid &&
+        (languagesRequired.dirty || languagesRequired.touched)
+      "
+      class="mt-2 text-sm text-red-600"
+    >
+      Languages Required are required.
+    </div>
+  </div>
+
+  <div>
+    <label for="minExperience" class="block text-sm font-medium text-gray-700"
+      >Minimum Experience (years)</label
+    >
+    <input
+      type="number"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="minExperience"
+      [(ngModel)]="jobData.minExperience"
+      name="minExperience"
+      required
+      min="0"
+      #minExperience="ngModel"
+    />
+    <div
+      *ngIf="
+        minExperience.invalid && (minExperience.dirty || minExperience.touched)
+      "
+      class="mt-2 text-sm text-red-600"
+    >
+      <div *ngIf="minExperience.errors?.['required']">
+        Minimum experience is required.
+      </div>
+      <div *ngIf="minExperience.errors?.['min']">
+        Minimum experience cannot be negative.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="salaryMin" class="block text-sm font-medium text-gray-700"
+      >Minimum Salary</label
+    >
+    <input
+      type="number"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="salaryMin"
+      [(ngModel)]="jobData.salaryMin"
+      name="salaryMin"
+      required
+      min="0"
+      #salaryMin="ngModel"
+    />
+    <div
+      *ngIf="salaryMin.invalid && (salaryMin.dirty || salaryMin.touched)"
+      class="mt-2 text-sm text-red-600"
+    >
+      <div *ngIf="salaryMin.errors?.['required']">
+        Minimum salary is required.
+      </div>
+      <div *ngIf="salaryMin.errors?.['min']">
+        Minimum salary cannot be negative.
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="salaryMax" class="block text-sm font-medium text-gray-700"
+      >Maximum Salary</label
+    >
+    <input
+      type="number"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="salaryMax"
+      [(ngModel)]="jobData.salaryMax"
+      name="salaryMax"
+      required
+      min="0"
+      #salaryMax="ngModel"
+    />
+    <div
+      *ngIf="salaryMax.invalid && (salaryMax.dirty || salaryMax.touched)"
+      class="mt-2 text-sm text-red-600"
+    >
+      <div *ngIf="salaryMax.errors?.['required']">
+        Maximum salary is required.
+      </div>
+      <div *ngIf="salaryMax.errors?.['min']">
+        Maximum salary cannot be negative.
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 space-x-4">
+    <button
+      type="submit"
+      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      [disabled]="!jobForm.form.valid"
+    >
+      Update Job
+    </button>
+    <button
+      type="button"
+      class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      [routerLink]="['/']"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

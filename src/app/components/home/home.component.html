@@ -1,0 +1,155 @@
+<main class="m-auto my-10 max-w-5xl space-y-10 px-3">
+  <div class="flex items-center justify-between">
+    <div class="flex justify-start w-1/3">
+      <ng-container *ngIf="isHR$ | async">
+        <div class="inline-flex rounded-md shadow-sm" role="group">
+          <label class="relative inline-flex items-center">
+            <input
+              type="radio"
+              class="absolute w-0 h-0 opacity-0"
+              name="jobStatus"
+              value="All"
+              [(ngModel)]="currentStatus"
+              (change)="loadJobs()"
+            />
+            <span
+              class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-l-lg cursor-pointer"
+              [ngClass]="{
+                'bg-blue-600 text-white': currentStatus === 'All',
+                'bg-white text-gray-700 hover:bg-gray-50':
+                  currentStatus !== 'All'
+              }"
+            >
+              All
+            </span>
+          </label>
+          <label class="relative inline-flex items-center">
+            <input
+              type="radio"
+              class="absolute w-0 h-0 opacity-0"
+              name="jobStatus"
+              value="Active"
+              [(ngModel)]="currentStatus"
+              (change)="loadJobs()"
+            />
+            <span
+              class="px-4 py-2 text-sm font-medium border-t border-b border-gray-200 cursor-pointer"
+              [ngClass]="{
+                'bg-blue-600 text-white': currentStatus === 'Active',
+                'bg-white text-gray-700 hover:bg-gray-50':
+                  currentStatus !== 'Active'
+              }"
+            >
+              Active
+            </span>
+          </label>
+          <label class="relative inline-flex items-center">
+            <input
+              type="radio"
+              class="absolute w-0 h-0 opacity-0"
+              name="jobStatus"
+              value="Closed"
+              [(ngModel)]="currentStatus"
+              (change)="loadJobs()"
+            />
+            <span
+              class="px-4 py-2 text-sm font-medium border border-gray-200 rounded-r-lg cursor-pointer"
+              [ngClass]="{
+                'bg-blue-600 text-white': currentStatus === 'Closed',
+                'bg-white text-gray-700 hover:bg-gray-50':
+                  currentStatus !== 'Closed'
+              }"
+            >
+              Closed
+            </span>
+          </label>
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex-grow text-center">
+      <h2 class="text-3xl font-bold">Available Jobs</h2>
+    </div>
+    <div class="w-1/3"></div>
+  </div>
+  <div class="space-y-4">
+    <article
+      *ngFor="let job of jobs"
+      class="flex flex-col gap-3 rounded-lg border p-5 hover:bg-gray-100 transition duration-300 cursor-pointer"
+      [routerLink]="['/job', job.id]"
+    >
+      <div class="flex gap-4">
+        <div class="flex-grow space-y-6">
+          <div class="space-y-1">
+            <h2 class="text-xl font-medium">{{ job.title }}</h2>
+            <p class="flex items-center gap-1.5 text-gray-600">
+              <lucide-icon
+                name="briefcase-business"
+                [size]="18"
+                className="shrink-0"
+              />
+              {{ job.designation }}
+            </p>
+          </div>
+          <div class="text-gray-600 space-y-1">
+            <p class="flex items-center gap-1.5">
+              <lucide-icon name="user-round" [size]="18" className="shrink-0" />
+              {{ job.minExperience }} years
+            </p>
+
+            <p class="flex items-center gap-1.5">
+              <lucide-icon name="globe" [size]="18" className="shrink-0" />
+              {{ job.location }}
+            </p>
+            <p class="flex items-center gap-1.5">
+              <lucide-icon name="banknote" [size]="18" className="shrink-0" />
+              {{ job.salaryMin | currency : "INR" }} -
+              {{ job.salaryMax | currency : "INR" }}
+            </p>
+          </div>
+        </div>
+        <div class="shrink-0 flex flex-col items-end justify-between">
+          <p class="flex items-center gap-1.5">
+            <lucide-icon name="clock" [size]="18" class="shrink-0" />
+            {{ job.createdAt | timeAgo }}
+          </p>
+          <div class="flex justify-end gap-2 mt-3">
+            <ng-container *ngIf="isHR$ | async">
+              <button
+                [routerLink]="['/edit-job', job.id]"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+              >
+                Edit
+              </button>
+              <ng-container *ngIf="job.status !== 'Closed'; else openJobButton">
+                <button
+                  (click)="
+                    updateJobStatus(job, 'Closed'); $event.stopPropagation()
+                  "
+                  class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                >
+                  Close
+                </button>
+              </ng-container>
+              <ng-template #openJobButton>
+                <button
+                  (click)="
+                    updateJobStatus(job, 'Active'); $event.stopPropagation()
+                  "
+                  class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                >
+                  Open
+                </button>
+              </ng-template>
+              <button
+                (click)="deleteJob(job.id); $event.stopPropagation()"
+                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300"
+              >
+                Delete
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</main>

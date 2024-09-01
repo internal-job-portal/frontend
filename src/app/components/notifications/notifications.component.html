@@ -1,0 +1,50 @@
+<ng-container *ngIf="isHR$ | async">
+  <h3 class="text-xl font-semibold mt-6 mb-4">Notifications</h3>
+  <div
+    *ngIf="notifications.length > 0; else noNotifications"
+    class="overflow-x-auto"
+  >
+    <table class="min-w-full bg-white">
+      <thead class="bg-gray-100">
+        <tr>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Message
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Created At
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr *ngFor="let notification of notifications">
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ notification.message }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ notification.createdAt | date : "medium" }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <button
+              (click)="markAsRead(notification.id)"
+              class="text-blue-600 hover:underline"
+            >
+              Mark as Read
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noNotifications>
+    <p class="text-gray-500 italic">No unread notifications at this time.</p>
+  </ng-template>
+</ng-container>

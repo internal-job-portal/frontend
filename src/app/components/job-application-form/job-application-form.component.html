@@ -1,0 +1,71 @@
+<h2 class="text-2xl font-bold mb-4">Apply for Job</h2>
+<form (ngSubmit)="onSubmit()" #applicationForm="ngForm" class="space-y-4">
+  <div>
+    <label for="firstName" class="block text-sm font-medium text-gray-700"
+      >First Name</label
+    >
+    <input
+      type="text"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="firstName"
+      [(ngModel)]="candidateData.firstName"
+      name="firstName"
+      required
+    />
+  </div>
+  <div>
+    <label for="lastName" class="block text-sm font-medium text-gray-700"
+      >Last Name</label
+    >
+    <input
+      type="text"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+      id="lastName"
+      [(ngModel)]="candidateData.lastName"
+      name="lastName"
+      required
+    />
+  </div>
+  <div>
+    <label for="employeeId" class="block text-sm font-medium text-gray-700"
+      >Employee ID</label
+    >
+    <input
+      type="number"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 cursor-not-allowed"
+      id="employeeId"
+      [ngModel]="candidateData.employeeId"
+      name="employeeId"
+      readonly
+    />
+  </div>
+  <div>
+    <label for="email" class="block text-sm font-medium text-gray-700"
+      >Email</label
+    >
+    <input
+      type="email"
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-100 cursor-not-allowed"
+      id="email"
+      [ngModel]="candidateData.email"
+      name="email"
+      readonly
+    />
+  </div>
+  <div class="flex space-x-4">
+    <button
+      type="submit"
+      class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      [disabled]="!applicationForm.form.valid"
+    >
+      Apply
+    </button>
+    <button
+      type="button"
+      class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+      [routerLink]="['/']"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

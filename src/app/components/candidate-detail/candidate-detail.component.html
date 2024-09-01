@@ -1,0 +1,31 @@
+<div class="container mx-auto px-4 py-8">
+  <h2 class="text-2xl font-bold mb-4">
+    Applied Jobs for Employee ID: {{ employeeId }}
+  </h2>
+
+  <div *ngIf="appliedJobs.length > 0; else noJobs" class="space-y-4">
+    <div
+      *ngFor="let job of appliedJobs"
+      class="bg-white shadow-md rounded-lg p-6"
+    >
+      <h3 class="text-xl font-semibold mb-2">{{ job.title }}</h3>
+      <p><strong>Designation:</strong> {{ job.designation }}</p>
+      <p><strong>Location:</strong> {{ job.location }}</p>
+      <p>
+        <strong>Salary Range:</strong> {{ job.salaryMin | currency : "INR" }} -
+        {{ job.salaryMax | currency : "INR" }}
+      </p>
+      <p><strong>Status:</strong> {{ job.status }}</p>
+      <p>
+        <strong>Required Skills:</strong> {{ job.requiredSkills?.join(", ") }}
+      </p>
+      <p><strong>Minimum Experience:</strong> {{ job.minExperience }} years</p>
+    </div>
+  </div>
+
+  <ng-template #noJobs>
+    <p class="text-gray-500 italic">
+      This employee hasn't applied to any jobs yet.
+    </p>
+  </ng-template>
+</div>
