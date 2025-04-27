@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://ijp.example.com/api',
+  apiUrl: 'https://ijp.example.com/api',
 };
